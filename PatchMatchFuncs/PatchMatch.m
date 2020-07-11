@@ -1,5 +1,5 @@
-function [ann, annd]=PatchMatchV2(imRef, imSrc, baseline,  wSize, stepSize)
-% µ¥Ïòpatch match
+function [ann, annd]=PatchMatch(imRef, imSrc, baseline,  wSize, stepSize)
+% å•å‘patch match
 %% ========================================================================
 % based on patch match algorithm
 % random search corresponding patches: imSrc->imRef
@@ -11,7 +11,7 @@ function [ann, annd]=PatchMatchV2(imRef, imSrc, baseline,  wSize, stepSize)
     MaxIter = 2;
     C = 0.03 ^ 2 / 2; % inherited from SSIM
     xIdx = 1 : stepSize : xIdxMax;
-    xIdx = [xIdx xIdx(end)+1 : xIdxMax]; %¼ÓÈë±ßÔµpatch
+    xIdx = [xIdx xIdx(end)+1 : xIdxMax]; %åŠ å…¥è¾¹ç¼˜patch
     yIdy = 1 : stepSize : yIdxMax;
     yIdy = [yIdy yIdy(end)+1 : yIdxMax];
     xIter = length(xIdx);
@@ -21,7 +21,7 @@ function [ann, annd]=PatchMatchV2(imRef, imSrc, baseline,  wSize, stepSize)
 %     window3D = window3D / sum(window3D(:));
     %% Initialize with random nearest neighbor field (NNF)
     ann = zeros(xIter, yIter, 2); % x&y coor: imRef(xIdx(i),yIdx(j))->imSrc(squeeze(ann(i,j,:)))
-    [X,Y] = ndgrid(xIdx, yIdy); % ³õÊ¼Î»ÖÃÎªÔ­Ê¼Î»ÖÃ
+    [X,Y] = ndgrid(xIdx, yIdy); % åˆå§‹ä½ç½®ä¸ºåŽŸå§‹ä½ç½®
     ann(:,:,1) = X;
     ann(:,:,2) = Y;
     % structure rate
@@ -73,10 +73,10 @@ function [ann, annd]=PatchMatchV2(imRef, imSrc, baseline,  wSize, stepSize)
                %% Random search: Improve current guess by searching in boxes 
                 % of exponentially decreasing size around the current best guess
                 SearchWidth = round(sR*0.8);
-                while (SearchWidth >= 1) %×îÐ¡¾«¶È1
+                while (SearchWidth >= 1) %æœ€å°ç²¾åº¦1
 %                     ymin = max(ybest1-SearchWidth,1);
 %                     ymax = min(ybest1+SearchWidth+1,yIdxMax);
-                    ymin = max(max(yI-sR,ybest-SearchWidth),1); % ÔÚ[yI-sR,yI+sR]·¶Î§ÄÚËÑË÷
+                    ymin = max(max(yI-sR,ybest-SearchWidth),1); % åœ¨[yI-sR,yI+sR]èŒƒå›´å†…æœç´¢
                     ymax = min(min(yI+sR,ybest+SearchWidth),yIdxMax);
                     if ymax>=ymin
                         Range = yIdy((yIdy>=ymin)&(yIdy<=ymax));
