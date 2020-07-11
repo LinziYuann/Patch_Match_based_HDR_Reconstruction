@@ -9,3 +9,7 @@
 输入图像在data文件夹下(不同曝光的输入图像及其曝光信息，基线大小)，结果保存在alignSave文件夹下。
 
 测试运行TestDemo.m即可。
+
+### 参考
+
+PatchMatch: A Randomized Correspondence Algorithm for Structural Image Editing
